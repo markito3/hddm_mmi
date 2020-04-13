@@ -40,7 +40,7 @@ CXXFLAGS += -I /usr/include/tirpc
 
 INSTALL_PREFIX = ..
 
-HDDM_INCLUDE_FLAGS = -I/home/marki/cleave/particleType \
+HDDM_INCLUDE_FLAGS = -I$(PARTICLETYPE_HOME) \
     -I$(XSTREAM_HOME)/include -I$(XERCESCROOT)/include -I /usr/include/tirpc
 
 all:	mkdirs $(BINARIES)
