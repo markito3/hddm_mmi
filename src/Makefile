@@ -34,7 +34,7 @@ endif
 
 OBJDIR = .obj
 BINDIR = .bin
-BINARIES = $(BINDIR)/xml-hddm $(BINDIR)/hddm-xml $(BINDIR)/hddm-c $(BINDIR)/hddm-cpp $(BINDIR)/hddmcat
+BINARIES = $(BINDIR)/xml-hddm $(BINDIR)/hddm-xml $(BINDIR)/hddm-c $(BINDIR)/hddm-cpp $(BINDIR)/hddmcat $(BINDIR)/hddm-py
 
 CXXFLAGS += -I /usr/include/tirpc
 
@@ -78,6 +78,12 @@ $(BINDIR)/hddm-cpp: hddm-cpp.cpp $(OBJDIR)/XString.o $(OBJDIR)/XParsers.o $(OBJD
 
 $(BINDIR)/hddmcat: hddmcat.cpp
 	$(CPP) $(HDDM_INCLUDE_FLAGS) $(LD_FLAGS) -o $@ $^
+
+$(BINDIR)/hddm-py: hddm-py.cpp $(OBJDIR)/XString.o $(OBJDIR)/XParsers.o $(OBJDIR)/md5.o
+	$(CPP) $(LD_FLAGS) $(HDDM_INCLUDE_FLAGS) \
+	-o $@ $^ \
+	-L$(XSTREAM_HOME)/lib -lxstream -lbz2 -lz \
+	-L$(XERCESCROOT)/lib -lxerces-c $(LIBXDR)
 
 test: $(BINDIR)/hddm-c $(BINDIR)/hddm-cpp $(BINDIR)/hddm-xml test.xml
 	hddm-c test.xml
